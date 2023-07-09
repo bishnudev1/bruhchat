@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "991719487566",
+    "project_id": "bruhchat-a6e6e",
+    "storage_bucket": "bruhchat-a6e6e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991719487566:android:50944112b6716ed884eb1f",
+        "android_client_info": {
+          "package_name": "com.example.bruhchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991719487566-u3djm5o5rej90q8ng02m3pmbfsomd8b5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPmAghUuB2ZUMrWuXJozLZ0F0uI3Tbn7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991719487566-u3djm5o5rej90q8ng02m3pmbfsomd8b5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

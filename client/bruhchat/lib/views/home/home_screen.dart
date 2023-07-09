@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  String username;
+  HomeScreen({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +13,20 @@ class HomeScreen extends StatelessWidget {
         disposeViewModel: false,
         onViewModelReady: (viewModel) {
           viewModel.socketInit();
-          viewModel.initChats();
+          viewModel.initData();
         },
         builder: (context, viewModel, child) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text("Bruhchat"),
+              automaticallyImplyLeading: false,
+              title: Text("Welcome $username"),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      viewModel.logoutCurrentUser(context);
+                    },
+                    icon: const Icon(Icons.logout))
+              ],
             ),
             body: SafeArea(
               child: Padding(

@@ -27,15 +27,12 @@ io.on('connection', (socket) => {
 
 app.use(cors());
 
+import chatRouter from './routes/chat_routers.js';;
+
+app.use("/api/v1", chatRouter);
+
 app.get('/', (req, res) => {
     res.send("Server is working (-_-)")
-});
-
-app.get('/chats', async (req, res) => {
-    const chats = await Chat.find();
-    res.status(200).json({
-        data: chats
-    });
 });
 
 server.listen(port, () => {
