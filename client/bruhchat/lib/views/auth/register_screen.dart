@@ -68,9 +68,6 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-          floatingActionButton: FloatingActionButton(onPressed: (){
-            viewModel.hiveStatus();
-          },child: const Icon(Icons.send),),
         );
       },
     );

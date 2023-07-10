@@ -20,7 +20,7 @@ class OnboardingViewmodel extends BaseViewModel {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => HomeScreen(username: user.username),
+                builder: (context) => const HomeScreen(),
               ));
         });
       } if (box.isEmpty) {

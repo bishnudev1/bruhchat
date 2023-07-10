@@ -2,7 +2,6 @@ import 'package:bruhchat/views/onboarding/onboarding_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
@@ -14,11 +13,8 @@ class OnboardingScreen extends StatelessWidget {
         viewModel.fetchCurrentUser(context);
       },
       builder: (context, viewModel, child) {
-        return  Scaffold(
-          body: const FlutterLogo(),
-                    floatingActionButton: FloatingActionButton(onPressed: (){
-            viewModel.hiveStatus();
-          },child: const Icon(Icons.send),),
+        return const Scaffold(
+          body: Center(child: FlutterLogo(size: 70)),
         );
       },
     );

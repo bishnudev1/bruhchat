@@ -29,8 +29,8 @@ class AuthViewModel extends BaseViewModel {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(
-            username: _usernameController.text,
+          builder: (context) => const HomeScreen(
+            
           ),
         ));
   }

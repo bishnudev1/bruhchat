@@ -2,11 +2,26 @@ import 'package:bruhchat/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as oauth;
 import 'package:hive/hive.dart';
+import 'package:stacked/stacked.dart';
 
 import '../data/hive/user_adapter.dart';
 
-class AuthServices {
+class AuthServices with ListenableServiceMixin {
   final auth = oauth.FirebaseAuth.instance;
+
+  late String _username;
+
+  String? get isSignedIn {
+    if (auth.currentUser != null) {
+      return auth.currentUser!.email;
+    }
+    return null;
+  }
+
+  String get currentUserName {
+    return "";
+  }
+
   final CollectionReference _collections =
       FirebaseFirestore.instance.collection("bruhchat");
 
@@ -25,12 +40,7 @@ class AuthServices {
             createdAt: user.createdAt);
         final box = await Hive.openBox<User>('user');
 
-        if (box.isEmpty) {
-          await box.put("currentUser", user0);
-        } else if (box.isNotEmpty) {
-          await box.clear();
-          await box.put("currentUser", user0);
-        }
+        await box.put("currentUser", user0);
         await box.close();
 
         return user;
@@ -47,9 +57,9 @@ class AuthServices {
 
   Future logoutUser() async {
     final box = await Hive.openBox<User>('user');
-    final res = await auth.signOut();
+    await auth.signOut();
     if (box.isOpen) {
-      await box.clear();
+      await box.delete("currentUser");
       await box.close();
     }
   }

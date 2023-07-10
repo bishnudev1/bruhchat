@@ -20,10 +20,16 @@ class HomeViewModel extends BaseViewModel {
 
   List<Chat> get allMessages => _allMessages;
 
+  checkCurrentUser() {
+    final fireEmail = _authServices.auth.currentUser!.email;
+    return fireEmail == _currentUserEmail;
+  }
+
   Future fetchAllChats() async {
     final uri = Uri.parse("http://10.0.2.2:3000/api/v1/chats");
 
     final resp = await http.get(uri);
+    print(resp.body);
 
     if (resp.statusCode == 200) {
       final response = jsonDecode(resp.body);
@@ -35,24 +41,30 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  String? _currentUserName;
-  String? get currentUserName => _currentUserName;
+  String? _currentUserEmail;
+  String? get currentUserEmail => _currentUserEmail;
+
+  String? _currentUsername;
+  String? get currentUsername => _currentUsername;
 
   fetchCurrentUser() async {
-    var box = await Hive.openBox<User>(
-        'user'); // Open the existing box instead of opening it again
+    var box = await Hive.openBox<User>('user');
+    print(box
+        .get("currentUser")!
+        .createdAt); // Open the existing box instead of opening it again
     try {
       if (box.isNotEmpty) {
         // Check if the box is not empty
-        User? user = box.getAt(0);
+        User? user = box.get("currentUser");
         if (user != null) {
-          _currentUserName = user.username;
+          _currentUserEmail = user.email;
+          _currentUsername = user.username;
         } else {
-          _currentUserName = null;
+          _currentUserEmail = null;
           print('User not found in Hive');
         }
       } else {
-        _currentUserName = null;
+        _currentUserEmail = null;
         print('Hive box is empty');
       }
       notifyListeners();
@@ -101,7 +113,9 @@ class HomeViewModel extends BaseViewModel {
   sendMessage() {
     _socket.emit("message", {
       "message": _messageInputController.text.toString(),
-      "sender": _currentUserName
+      "sender": _currentUsername.toString(),
+      "email": _currentUserEmail.toString(),
+      "createdAt": "${DateTime.now().hour}:${DateTime.now().minute}"
     });
     _messageInputController.clear();
   }
@@ -113,12 +127,10 @@ class HomeViewModel extends BaseViewModel {
 
   logoutCurrentUser(BuildContext context) async {
     final response = await _authServices.logoutUser();
-    if (response != null) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => RegisterScreen(),
-          ));
-    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RegisterScreen(),
+        ));
   }
 }
