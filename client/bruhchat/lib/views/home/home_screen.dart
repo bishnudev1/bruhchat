@@ -23,14 +23,16 @@ class HomeScreen extends StatelessWidget {
             appBar: AppBar(
                 automaticallyImplyLeading: false,
                 backgroundColor: Appstyles.backgroundColor,
-                title: const Text(
-                  "Madhurima",
+                title: Text(
+                  viewModel.currentUserName ?? "",
                   style: Appstyles.appBarHeadingStyle,
                 ),
                 elevation: 0,
                 actions: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      viewModel.logoutCurrentUser();
+                    },
                     child: const Icon(Icons.logout,
                         color: Appstyles.highlightColor),
                   ),
@@ -74,7 +76,10 @@ class HomeScreen extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             SizedBox(
-                                              width: MediaQuery.of(context).size.width*.6,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .6,
                                               child: AutoSizeText(
                                                 messages.message,
                                                 //maxLines: 1,
@@ -82,7 +87,8 @@ class HomeScreen extends StatelessWidget {
                                                             .currentUserEmail ==
                                                         messages.email
                                                     ? const TextStyle(
-                                                        color: Color(0xff200C08),
+                                                        color:
+                                                            Color(0xff200C08),
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         fontSize: 14)

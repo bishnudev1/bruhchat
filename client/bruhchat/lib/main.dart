@@ -22,6 +22,10 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  final authServices = locator<AuthServices>();
+  print("Currently signed in status: ${authServices.isSignedIn}");
+
   runApp(const MyApp());
 }
 
@@ -38,7 +42,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: StackedRouter().onGenerateRoute,
       initialRoute:
           authService.isSignedIn == null || authService.isSignedIn == ""
-              ? Routes.registerScreen
+              ? Routes.onboardingScreen
               : Routes.homeScreen,
       //home: OnboardingScreen(),
     );

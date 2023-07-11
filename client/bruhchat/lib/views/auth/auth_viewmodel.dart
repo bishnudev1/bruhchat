@@ -1,14 +1,17 @@
 import 'package:bruhchat/services/auth_services.dart';
-import 'package:bruhchat/views/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
+import '../../app/app.locator.dart';
+import '../../app/app.router.dart';
 import '../../data/hive/user_adapter.dart';
 import '../../models/user_model.dart';
 
 class AuthViewModel extends BaseViewModel {
   final AuthServices _authServices = AuthServices();
+  final _navigationService = locator<NavigationService>();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -18,7 +21,7 @@ class AuthViewModel extends BaseViewModel {
   TextEditingController get emailController => _emailController;
   TextEditingController get passwordController => _passwordController;
 
-  registerNewUser(BuildContext context) async {
+  registerNewUser() async {
     final response = await _authServices.registerUser(
         user: UserModel(
             username: _usernameController.text,
@@ -26,13 +29,18 @@ class AuthViewModel extends BaseViewModel {
             password: _passwordController.text,
             createdAt: DateTime.now().toLocal().toString()));
     notifyListeners();
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(
-            
-          ),
-        ));
+    _navigationService.replaceWith(Routes.homeScreen);
+  }
+
+  loginOldUser() async {
+    final response = await _authServices.loginUser(
+        user: UserModel(
+            username: "",
+            email: _emailController.text.toString(),
+            password: _passwordController.text.toString(),
+            createdAt: ""));
+    notifyListeners();
+    _navigationService.replaceWith(Routes.homeScreen);
   }
 
   hiveStatus() async {

@@ -6,6 +6,7 @@
 
 // ignore_for_file: public_member_api_docs, implementation_imports, depend_on_referenced_packages
 
+import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 
 import '../services/auth_services.dart';
@@ -22,4 +23,5 @@ Future<void> setupLocator({
 
 // Register dependencies
   locator.registerLazySingleton(() => AuthServices());
+  locator.registerLazySingleton(() => NavigationService());
 }
