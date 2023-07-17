@@ -24,7 +24,9 @@ Future<void> main() async {
   );
 
   final authServices = locator<AuthServices>();
+ // final socketServices = locator<SocketServices>();
   print("Currently signed in status: ${authServices.isSignedIn}");
+  //socketServices.startSocketServer();
 
   runApp(const MyApp());
 }
@@ -44,7 +46,6 @@ class MyApp extends StatelessWidget {
           authService.isSignedIn == null || authService.isSignedIn == ""
               ? Routes.onboardingScreen
               : Routes.homeScreen,
-      //home: OnboardingScreen(),
     );
   }
 }

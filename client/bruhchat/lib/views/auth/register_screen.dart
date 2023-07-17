@@ -25,6 +25,8 @@ class RegisterScreen extends StatelessWidget {
                   key: _key,
                   child: Column(
                     children: [
+                      Image.asset("assets/images/logo/bruhchat.jpg"),
+                      const SizedBox(height: 50,),
                       TextFormField(
                         controller: viewModel.usernameController,
                         validator: (value) {

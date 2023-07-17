@@ -41,7 +41,8 @@ io.on('connection', (socket) => {
 
 
 
-import chatRouter from './routes/chat_routers.js';;
+import chatRouter from './routes/chat_routers.js'; 
+;
 
 app.use("/api/v1", chatRouter);
 
@@ -50,6 +51,18 @@ app.get('/', (req, res) => {
 });
 
 server.listen(port, () => {
-    connectDB();
-    console.log(`Server is running on http://localhost:${port}`);
+    connectDB().then(() => {
+        Chat.find().then((resp) => {
+            if (resp.isEmpty) {
+                console.log("No chats are found from the database");
+            }
+            else {
+                console.log(`Current chat's status: ${resp.length}`);
+            }
+        });
+        console.log(`Server is running on http://localhost:${port}`);
+    }).catch((err) => {
+        console.log(err);
+    });
+
 });

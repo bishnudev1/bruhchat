@@ -42,6 +42,8 @@ class LoginScreen extends StatelessWidget {
                   key: _key,
                   child: Column(
                     children: [
+                      Image.asset("assets/images/logo/bruhchat.jpg"),
+                      const SizedBox(height: 50,),
                       TextFormField(
                         controller: viewModel.emailController,
                         validator: (value) {

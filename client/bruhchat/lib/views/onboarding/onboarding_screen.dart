@@ -22,9 +22,7 @@ class OnboardingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const FlutterLogo(
-                  size: 60,
-                ),
+                Image.asset("assets/images/logo/bruhchat.jpg"),
                 const SizedBox(
                   height: 50,
                 ),
